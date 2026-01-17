@@ -1,0 +1,54 @@
+databaseChangeLog:
+  - changeSet:
+      id: 02-create-ads-table
+      author: elliansss
+      changes:
+        - createTable:
+            tableName: ads
+            columns:
+              - column:
+                  name: pk
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: price
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_ads_user
+                    references: users(id)
+                    onDelete: CASCADE
+
+        - createIndex:
+            tableName: ads
+            columns:
+              - column:
+                  name: user_id
+            indexName: idx_ads_user_id
+
+        - createIndex:
+            tableName: ads
+            columns:
+              - column:
+                  name: created_at
+            indexName: idx_ads_created_at

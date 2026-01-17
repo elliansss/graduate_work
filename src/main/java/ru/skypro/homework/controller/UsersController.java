@@ -40,18 +40,4 @@ public class UsersController {
         return ResponseEntity.ok(updatedUser);
     }
 
-    @PatchMapping(value = "/me/image", consumes = "multipart/form-data")
-    public ResponseEntity<?> updateUserImage(@RequestParam("image") MultipartFile image,
-                                             Authentication authentication) throws IOException {
-        log.info("Обновление аватара пользователя");
-        userService.updateUserImage(authentication.getName(), image);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/me/image")
-    public ResponseEntity<byte[]> getUserImage(Authentication authentication) throws IOException {
-        log.info("Получение аватара пользователя");
-        byte[] imageBytes = userService.getUserImage(authentication.getName());
-        return ResponseEntity.ok(imageBytes);
-    }
 }

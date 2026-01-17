@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 04-create-images-table
+      author: elliansss
+      changes:
+        - createTable:
+            tableName: images
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: file_path
+                  type: VARCHAR(500)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_size
+                  type: BIGINT
+              - column:
+                  name: media_type
+                  type: VARCHAR(100)
+              - column:
+                  name: data
+                  type: BYTEA
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: image_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_users_image
+                    references: images(id)
+                    nullable: true
+
+        - addColumn:
+            tableName: ads
+            columns:
+              - column:
+                  name: image_id
+                  type: BIGINT
+                  constraints:
+                    foreignKeyName: fk_ads_image
+                    references: images(id)
+                    nullable: true
